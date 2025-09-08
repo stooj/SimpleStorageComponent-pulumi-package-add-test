@@ -37,13 +37,15 @@ namespace PulumiSampleComponent
         /// The created resource group
         /// </summary>
         [Output("resourceGroup")]
-        public Output<ResourceGroup> ResourceGroup { get; private set; } = null!;
+        // public Output<ResourceGroup> ResourceGroup { get; private set; } = null!;
+	public Output<string> ResourceGroup { get; private set; } = null!;
 
         /// <summary>
         /// The created storage account
         /// </summary>
         [Output("storageAccount")]
-        public Output<Pulumi.AzureNative.Storage.StorageAccount> StorageAccount { get; private set; } = null!;
+        // public Output<Pulumi.AzureNative.Storage.StorageAccount> StorageAccount { get; private set; } = null!;
+        public Output<string> StorageAccount { get; private set; } = null!;
 
         /// <summary>
         /// The primary endpoint of the storage account
@@ -76,8 +78,8 @@ namespace PulumiSampleComponent
             }, new CustomResourceOptions { Parent = this });
 
             // Set outputs
-            this.ResourceGroup = Output.Create(resourceGroup);
-            this.StorageAccount = Output.Create(storageAccount);
+            this.ResourceGroup = resourceGroup.Name;
+            this.StorageAccount = storageAccount.Name;
             this.PrimaryEndpoint = storageAccount.PrimaryEndpoints.Apply(endpoints => endpoints.Blob);
 
             // Register outputs with the component
